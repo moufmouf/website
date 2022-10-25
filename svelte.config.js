@@ -16,7 +16,7 @@ const config = {
 			fallback: 'index.html'
 		}),
 		paths: {
-			base: dev ? '' : '/website'
+			base: ''
 		},
 		appDir: 'internal'
 	}
