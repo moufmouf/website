@@ -16,7 +16,7 @@ const config = {
 			fallback: 'index.html'
 		}),
 		paths: {
-			base: dev ? '' : '/repo_name'
+			base: dev ? '' : '/website'
 		},
 		appDir: 'internal'
 	}
