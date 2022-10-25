@@ -1,0 +1,76 @@
+@keyframes pulse2 {
+  0% {
+    box-shadow: 0 0 0 0 $mainColor;
+  }
+  100% {
+    box-shadow: 0 0 0 2em rgba(#fff, 0);
+  }
+}
+.btn-nft {
+  animation: pulse2 1s infinite;
+  animation-iteration-count: infinite;
+  font-weight: 600;
+  font-size: 14px;
+  &.btn-primary:hover {
+    animation: none;
+    border: 1px solid $mainColor;
+    background: rgba(0, 0, 0, 0.2);
+    & > span {
+      color: $mainColor;
+    }
+  }
+}
+.text-border {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #fff;
+  color: transparent;
+}
+.subtitle,
+.reinforcement-text {
+  opacity: 0.54;
+  font-size: 14px;
+  letter-spacing: -0.44px;
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+
+.pad-0 {
+  padding: 0;
+}
+
+.follow-us {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 20px 15px;
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  margin: 10px;
+  display: inline-block;
+  @include transition(all 0.25s ease);
+  & > img {
+    margin-right: 5px;
+    transform: translateY(7px);
+  }
+  &:hover {
+    color: $mainColor;
+    border: 1px solid $mainColor;
+    background: rgba(255, 255, 255, 0.1);
+    & > img {
+    }
+  }
+}
+
+.btn-zone {
+  text-align: center;
+}
+
+.lower {
+  text-transform: lowercase;
+}
+
+.italic {
+  font-style: italic;
+}

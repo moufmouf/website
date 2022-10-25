@@ -1,0 +1,303 @@
+.btn {
+  &.btn-mint {
+    background-image: linear-gradient(225deg, #FFFFFF 0%, #FFFFFF 27%, rgba(255,255,255,0.17) 100%);
+    border: 1px solid rgba(255,255,255,0.25);
+    transform: skewX(-20deg);
+    border-radius: 1px;
+    color: $bgColor;
+    font-weight: 800;
+  }
+}
+
+.block {
+  &.block-nft {
+    padding: 75px 0;
+    h2 {
+      font-size: 54px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 65px;
+      -moz-transform: rotate(-5deg);
+      -webkit-transform: rotate(-5deg);
+      -o-transform: rotate(-5deg);
+      -ms-transform: rotate(-5deg);
+      transform: rotate(-5deg);
+      -webkit-text-stroke-width: 1px;
+      -webkit-text-stroke-color: white;
+      color: transparent;
+      @media only screen and (max-width: $sm-max) {
+        font-size: 28px;
+      }
+      span {
+        color: white;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 285px;
+        right: 0;
+        margin: auto;
+        width: 145px;;
+        height: 10px;
+        background-image: $gradient;
+        @media only screen and (max-width: $sm-max) {
+          display: none;
+        }
+      }
+    }
+    .nft-carrousel {
+      .nft-elt {
+        position: relative;
+        margin-bottom: 65px;
+        @media only screen and (max-width: $xs-max) {
+          padding: 0 50px;
+          margin-bottom: 50px;
+        }
+        .nft-image {
+          position: relative;
+          @include transition(all .25s ease);
+          width: 85%;
+          margin: 0 auto;
+          &:hover {
+            @include transform(rotate(-3deg) scale(1.1));
+            .character {
+              .character-img {
+                @include transform(rotate(10deg));
+              }
+            }
+          }
+          .character {
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -24px;
+            left: -20px;
+            transform: rotate(-5deg);
+            .character-img {
+              position: absolute;
+              height: 120%;
+              @include transition(all .25s ease);
+              @include transform(rotate(5deg));
+            }
+          }
+          .background-nft {
+            width: 100%;
+          }
+        }
+        .btn-mint-wrapper {
+          position: absolute;
+          bottom: 25px;
+          right: 30px;
+          z-index: 1;
+          display: none;
+        }
+        .nft-name {
+          position: absolute;
+          bottom: -20px;
+          left: 15px;
+          font-size: 18px;
+          color: white;
+          font-weight: 900;
+          text-shadow: 0px 0px 11px $electriColor, 0px 0px 3px $electriColor;
+          @include transform(rotate(-5deg));
+        }
+      }
+    }
+    .nft-more {
+      text-align: center;
+    }
+  }
+  &.block-informations {
+    padding-top: 50px;
+    .informations-wrapper {
+      margin-bottom: 25px;
+      .img-informations {
+        @include transform(rotate(0deg) skewX(-15deg));
+        border-radius: 25px;
+        min-height: 250px;
+        padding: 0;
+        overflow: hidden;
+        border: 10px solid rgb(45, 42, 84);
+        @media only screen and (max-width: $sm-max) {
+          @include transform(rotate(0deg) skewX(0));
+          width: 320px;
+          height: 240px;
+          border: none;
+        }
+        & > div {
+          width: 120%;
+          height: 110%;
+          @include transform(translateX(-30px) skewX(15deg));
+          background: url("http://placekitten.com/192/108") center center;
+          background-size: cover;
+          @media only screen and (max-width: $sm-max) {
+            @include transform(rotate(0deg) skewX(0));
+            width: 320px;
+            height: 240px;
+            margin: 0 auto;
+            border: 10px solid rgba(255,255,255,.2);
+            border-radius: 5px;
+          }
+        }
+      }
+      .txt-informations {
+        padding: 0 50px;
+        .information-title, .subtext, .subtitle {
+          text-align: left;
+          margin-top: 10px;
+          @media only screen and (max-width: $sm-max) {
+            text-align: center;
+            margin-bottom: 10px;
+          }
+          &.t-right {
+            text-align: right;
+            @media only screen and (max-width: $sm-max) {
+              text-align: center;
+            }
+            &.information-title {
+              padding: 0;
+            }
+            &.subtext {
+              margin-top: 5px;
+              padding: 0 15px;
+              @media only screen and (max-width: $sm-max) {
+                padding: 0;
+              }
+            }
+            &.subtitle {
+              padding: 0 30px;
+              @media only screen and (max-width: $sm-max) {
+                padding: 0;
+              }
+            }
+          }
+        }
+        .information-title {
+          padding: 0 30px;
+          @media only screen and (max-width: $sm-max) {
+            padding: 0;
+          }
+        }
+        .subtext {
+          padding: 0 15px;
+          font-family: $condensedFont;
+          @media only screen and (max-width: $sm-max) {
+            padding: 0;
+          }
+        }
+        .subtitle {
+          padding: 0;
+        }
+        .information-title {
+          font-size: 32px;
+          margin-top: 55px;
+          color: $electriColor;
+          & > span {
+            font-weight: 800;
+            background-image: $gradient;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+          }
+          @media only screen and (max-width: $sm-max) {
+
+          }
+        }
+      }
+    }
+  }
+  &.block-faq {
+    .accordion {
+      transform: translateZ(0);
+      & > .accordion-toggle{
+        position: absolute;
+        opacity: 0;
+        display: none;
+        &:checked ~ label {
+          background-image: $gradient;
+          padding-left: 20px;
+          text-shadow: none;
+          color: $labelColor;
+          &:after {
+            display: none;
+          }
+          .arrow-down {
+            @include transform(rotate(180deg))
+          }
+        }
+        &:checked ~ section{
+          height: auto;
+          padding: 40px 20px;
+          background: rgba(0,0,0,.35);
+          border-radius: 0 0px 10px 10px;
+        }
+      }
+      & > label {
+        position: relative;
+        display: block;
+        height: auto;
+        line-height: 22px;
+        padding: 15px 40px 15px 20px;
+        font-size: 18px;
+        font-family: $condensedFont;
+        letter-spacing: 1px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.1);
+        cursor: pointer;
+        margin-top: 15px;
+        color: $mainColor;
+        border-radius: 5px;
+        border: 1px solid rgba(255,255,255,.15);
+        @include transition(all .25s ease);
+        @media only screen and (max-width: $xs-max) {
+          font-size: 15px;
+        }
+        &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 0;
+          background: $electriColor;
+          border-radius: 5px 0 0 5px;
+          @include transition(all .25s ease);
+        }
+        &:hover {
+          padding-left: 30px;
+          background: rgba(255, 255, 255, 0.15);
+          border: 1px solid rgba(255,255,255,.2);
+          text-shadow: 0px 0px 11px $electriColor, 0px 0px 3px $electriColor;
+          &:after {
+            width: 4px;
+          }
+        }
+        .arrow-down {
+          position: absolute;
+          top: 0;
+          right: 20px;
+          bottom: 0;
+          transform: rotate(0deg);
+          transition: .3s transform;
+          width: 16px;
+          margin: auto;
+        }
+      }
+      & > section {
+        height: 0;
+        transition: .3s all;
+        overflow: hidden;
+        p {
+          margin: 15px 0;
+          padding: 0 20px;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
