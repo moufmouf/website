@@ -4,6 +4,7 @@
     import { canMintWhiteStore } from "../stores/WhiteListStore"
     import { mintedNfts, contractAddress } from "../stores/WalletStore";
     import { ethers } from "ethers";
+    import Contract from "../artifacts/Woka.json";
 
     export let wallet: string;
     export let providerEthereum; 
@@ -89,17 +90,25 @@
                         ],
                     });
                 } catch (addError) {
-                    console.error('wallet_addEthereumChain request error: ', addError);
-                    this.getChainError = true
-                    return;
+                    if (addError.code === 4001) {
+                        console.info('wallet_addEthereumChain => 4001 => request error: ', switchError);
+                    }else{
+                        console.error('wallet_addEthereumChain request error: ', addError);
+                        this.getChainError = true
+                        return;
+                    }
                 }
             }
-            console.error('wallet_switchEthereumChain request error: ', switchError);
-            this.getChainError = true
-            throw switchError;
+            if (switchError.code === 4001) {
+                console.info('wallet_switchEthereumChain => 4001 => request error: ', switchError);
+            }else{
+                console.error('wallet_switchEthereumChain request error: ', switchError);
+                this.getChainError = true
+                throw switchError;
+            }
         }
 
-                /* eslint-enable */
+        /* eslint-enable */
         mintPrice = await getCost();
         maxSupply = await getMaxSupply();
         totalSupply = await getTotalSupply();
