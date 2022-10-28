@@ -1,3 +1,3 @@
 import { writable } from "svelte/store";
 
-export const canMintWhiteStore = writable<boolean>(true);
+export const canMintWhiteStore = writable<boolean>(false);
