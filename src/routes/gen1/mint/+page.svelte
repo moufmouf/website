@@ -1,5 +1,101 @@
-<script>
+<script lang="ts">
   import "../../../scss/style.scss";
+  import MetamaskDownload from "../../../components/MetamaskDownload.svelte";
+  import NotLoggedOnMetaMask from "../../../components/NotLoggedOnMetaMask.svelte";
+  import MintBlock from "../../../components/MintBlock.svelte";
+  import detectEthereumProvider from '@metamask/detect-provider';
+  
+	import { onMount } from "svelte";
+
+  let hasEthProvider = false;
+  let hasWalletAccountConnected = false;
+  let wallets : Array<string> | null = null;
+  let providerEthereum = null;
+
+  onMount( async() => {
+    openWallet();
+  });
+
+  async function openWallet(){
+    providerEthereum = await detectEthereumProvider();
+    hasEthProvider = true;
+
+    if (!providerEthereum) return;
+    try{
+      // From now on, this should always be true:
+      // provider === window.ethereum
+      //startApp(provider); // initialize your app
+      await connect();
+      try{
+        hasWalletAccountConnected = await providerEthereum._metamask.isUnlocked();
+      }catch(err){
+        hasWalletAccountConnected = providerEthereum.isConnected();
+      }
+    }catch(err){
+      hasWalletAccountConnected = false;
+    }
+
+    providerEthereum.on('accountsChanged', (accounts: Array<string>) => {
+      // Handle the new accounts, or lack thereof.
+      // "accounts" will always be an array, but it can be empty.
+      wallets = accounts;
+    });
+
+    providerEthereum.on('chainChanged', (chainId: string) => {
+      // Handle the new chain.
+      // Correctly handling chain changes can be complicated.
+      // We recommend reloading the page unless you have good reason not to.
+      console.info('chainChanged', chainId);
+      window.location.reload();
+    });
+
+    console.log('providerEthereum => connect event');
+    providerEthereum.on('connect', (connectInfo) => {
+      console.info('connect', connectInfo);
+      window.location.reload();
+    });
+
+    interface ProviderRpcError extends Error {
+      message: string;
+      code: number;
+      data?: unknown;
+    }
+    providerEthereum.on('disconnect', (error: ProviderRpcError) => {
+      console.info('disconnect', error);
+      window.location.reload();
+    });
+
+    interface ProviderMessage {
+      type: string;
+      data: unknown;
+    }
+
+    providerEthereum.on('message', (message: ProviderMessage) => {
+      console.info('message', message);
+    });
+  }
+
+let currentAccount = null;
+// For now, 'eth_accounts' will continue to always return an array
+function handleAccountsChanged(accounts) {
+  if (accounts.length === 0) {
+    // MetaMask is locked or the user has not connected any accounts
+    throw 'Please connect to MetaMask.';
+  } else if (accounts[0] !== currentAccount) {
+    currentAccount = accounts[0];
+  }
+}
+
+// While you are awaiting the call to eth_requestAccounts, you should disable
+// any buttons the user can click to initiate the request.
+// MetaMask will reject any additional requests while the first is still
+// pending.
+async function connect() {
+  if(providerEthereum !== window.ethereum) throw "Do you have multiple wallets installed?";
+  return await providerEthereum.request({ method: 'eth_requestAccounts' }).then((accounts) => {
+    return handleAccountsChanged(accounts);
+  });
+}
 </script>
 
 <svelte:head>
@@ -59,46 +155,17 @@
         <div class="container">
           <div class="col-xs-12 pad-0 nft-content">
             <h1 class="text-center">
-              Mint <span>Gen 1</span>
+              Mint WOKA <span>Gen 1</span>
             </h1>
-            <div class="row mint-block">
-              <div class="col-xs-6">
-                <div class="mint-image">
-                  <img src="http://placekitten.com/g/400/400" />
-                </div>
-              </div>
-              <div class="col-xs-6">
-                <p class="mint-info">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In imperdiet massa id ex venenatis, sed posuere nisl feugiat. Duis euismod malesuada lectus, lobortis scelerisque libero fermentum eu.
-                </p>
-                <div>
-                  <!-- svelte-ignore a11y-label-has-associated-control -->
-                  <label class="label mint-qty-label text-center">Quantity</label>
-                  <select class="input">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
-                  <em class="input-info">Amount max 3 per transaction</em>
-                </div>
-                <div>
-                  <!-- svelte-ignore a11y-label-has-associated-control -->
-                  <label class="label mint-qty-label text-center">Value</label>
-                  <input disabled type="text" class="class mint-value" value="1" />
-                </div>
-                <div>
-                  <!-- svelte-ignore a11y-label-has-associated-control -->
-                  <label class="label mint-qty-label text-centerl">Total</label>
-                  <input type="text" class="mint-total" value="1" />
-                </div>
-                <div class="btn-zone">
-                  <!-- svelte-ignore security-anchor-rel-noreferrer -->
-                  <a href="https://play.staging.workadventu.re/@/metaventure/land/portal" target="_blank" class="btn btn-primary btn-nft" ph-id="go_to_metadventure">
-                    <span style="font-size: 14px;">Mint</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+            {#if (!hasEthProvider)}
+                <MetamaskDownload />
+            {:else}
+              {#if !hasWalletAccountConnected}
+                <NotLoggedOnMetaMask />
+              {:else}
+                <MintBlock wallet={currentAccount} providerEthereum={providerEthereum}/>
+              {/if}
+            {/if}
           </div>
         </div>
       </div>

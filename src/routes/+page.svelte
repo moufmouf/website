@@ -4,7 +4,7 @@
     import gsap from "gsap/dist/gsap";
     import ScrollTrigger from "gsap/dist/ScrollTrigger";
     import "../scss/style.scss";
-	import { onMount } from "svelte";
+	  import { onMount } from "svelte";
 
     onMount(() => {
         var animatedTextures = [];
@@ -412,9 +412,8 @@
                 <strong>Fasten your seatbelts Adventurers 🚀</strong>
               </p>
               <div class="btn-zone">
-                <a href="https://play.staging.workadventu.re/@/metaventure/land/portal" target="_blank" class="btn btn-primary btn-nft" ph-id="go_to_metadventure" style="cursor: wait;pointer-events: none;">
+                <a href="/gen1/mint" class="btn btn-primary btn-nft" ph-id="go_to_mint">
                   <span style="font-size: 14px;">Mint</span>
-                  <div style="font-size: 11px;">coming soon</div>
                 </a>
               </div>
             </div>
