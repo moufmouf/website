@@ -4,7 +4,7 @@
   import NotLoggedOnMetaMask from "../../../components/NotLoggedOnMetaMask.svelte";
   import MintBlock from "../../../components/MintBlock.svelte";
   import detectEthereumProvider from '@metamask/detect-provider';
-  
+
 	import { onMount } from "svelte";
 
   let hasEthProvider = false;
@@ -13,7 +13,7 @@
   let providerEthereum = null;
 
   onMount( async() => {
-    openWallet();
+    //openWallet();
   });
 
   async function openWallet(){
@@ -156,6 +156,15 @@ async function connect() {
             <h1 class="text-center">
               Mint WOKA <span>Gen 1</span>
             </h1>
+
+            <div class="row mint-block">
+              <div class="col text-center" style="display: flex;flex-direction: column;align-items: center;">
+                <p>The mint has been canceled due to technical issues causing an incorrect number of Wokas to be delivered.</p>
+                <p>We are deeply sorry for this, but anyone who participated in the mint has been <strong>fully refunded</strong> (including gas fees!)</p>
+                <p>We are in the process of analysing what went wrong. In the coming days, expect from us a detailed feedback and more details about a new mint date!</p>
+              </div>
+            </div>
+            <!--
             {#if (!hasEthProvider)}
                 <MetamaskDownload />
             {:else}
@@ -165,6 +174,7 @@ async function connect() {
                 <MintBlock wallet={currentAccount} providerEthereum={providerEthereum}/>
               {/if}
             {/if}
+            -->
           </div>
         </div>
       </div>
