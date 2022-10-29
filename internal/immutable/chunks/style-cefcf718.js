@@ -1,0 +1,1 @@
+var o=typeof globalThis<"u"?globalThis:typeof window<"u"?window:typeof{}<"u"?{}:typeof self<"u"?self:{};function t(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}export{o as c,t as g};
