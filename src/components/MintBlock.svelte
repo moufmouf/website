@@ -32,14 +32,11 @@
     const tree = new MerkleTree(leaves, keccak256, { sortPairs: true });
     const leaf = keccak256(wallet);
     const proof = tree.getProof(leaf).map((x) => {
-        console.log(x)
         return "0x" + x.toString("hex")
     });
 
-    console.log(leaf, proof)
-
-    const DATE_TIME_TO_MINT_WHITELIST = new Date('2022-10-29T19:00:00.00Z');
-    const DATE_TIME_TO_MINT = new Date('2022-10-29T15:00:00.00Z');
+    const DATE_TIME_TO_MINT_WHITELIST = new Date('2022-10-29T15:00:00.00Z');
+    const DATE_TIME_TO_MINT = new Date('2022-10-29T19:00:00.00Z');
 
     let timestampWhitelist = DATE_TIME_TO_MINT_WHITELIST.getTime() - (new Date()).getTime();
     let timestampMint = DATE_TIME_TO_MINT.getTime() - (new Date()).getTime();
@@ -141,9 +138,6 @@
         canMintWhiteStore.set((await isInWhitelist()) && mintedNftsContract === 0);
         updateTotalPrice();
         loading = false;
-
-        console.log(mintPrice, mintWhitelistPrice, maxSupply, totalSupply, mintedNftsContract, maxMintPerWallet);
-        console.log(maxMintPerWallet - mintedNftsContract)
     });
 
     onDestroy(async () => {
@@ -191,7 +185,6 @@
         const contract = new ethers.Contract(contractAddress, Contract.abi, signer);
         try {
             const result = await contract.isWhitelisted(proof, leaf);
-            console.log("is whitelisted", result);
             return Boolean(result);
         } catch (err) {
             console.error(err);
@@ -289,19 +282,16 @@
 
                 let transaction;
 
-                console.log(overrides);
                 if ($canMintWhiteStore) {
                     transaction = await contract.whitelistedMint(mintCount, overrides);
                 } else {
                     transaction = await contract.mint(currentWallet, mintCount, overrides);
                 }
-                console.log("transaction");
                 const test = await transaction.wait();
-                console.log("after transac", test);
+                console.info('transaction test', test);
                 hadMinted = quantitySelected;
             } catch (err) {
                 if (err.hasOwnProperty("data") && err.data.hasOwnProperty("message")) {
-                    console.log(err.data.message);
                     if (err.data.message.includes("insufficient funds")) {
                         error.set("You don't have enought to pay NFTs and gaz fees");
                         loadingMint.set(false);

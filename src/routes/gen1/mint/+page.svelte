@@ -49,7 +49,6 @@
       window.location.reload();
     });
 
-    console.log('providerEthereum => connect event');
     providerEthereum.on('connect', (connectInfo) => {
       console.info('connect', connectInfo);
       window.location.reload();
